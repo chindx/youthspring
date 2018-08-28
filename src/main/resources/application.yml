@@ -1,0 +1,31 @@
+#配置访问路径
+server:
+  servlet:
+    context-path: /youth
+  port: 8080
+#日志配置
+#hibernate日志，开发和测试环境使用
+logging:
+  level:
+    org.hibernate: debug
+#显示sql日志
+spring:
+  jpa:
+    show-sql: true
+    #配置自动建表：update--没有创建有则更新
+    hibernate:
+      ddl-auto: update
+  #数据库连接池
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver 
+    url: jdbc:mysql://localhost:3306/youthdb?usSSL=true
+    username: root
+    password: 123456
+#DATA WEB 相关配置{@link SpringDataWebProperties}
+  data:
+    web:
+      # 分页参数设置
+      pageable: 
+        default-page-size: 5
+        page-parameter: pageNumber
+        size-parameter: pageSize
