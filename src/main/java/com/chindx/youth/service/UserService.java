@@ -17,7 +17,7 @@ public interface UserService {
 	
 	User delete(Long id);
 	
-	User findById(Long id);
+	User getUser(Long id);
 	/**
 	 * 分页
 	 * */

@@ -1,7 +1,6 @@
 package com.chindx.youth.controller;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.chindx.youth.entity.User;
 import com.chindx.youth.service.UserService;
 
 @Controller
 @RequestMapping(value= "/users")
 public class UserController {
-		
+	
 	@Autowired
 	private UserService userService;
 	
@@ -47,7 +45,7 @@ public class UserController {
 	
 	@RequestMapping(value="/update/{id}", method = RequestMethod.GET)
 	public String getuser(@PathVariable Long id, ModelMap map) {
-		map.addAttribute("user", userService.findById(id));
+		map.addAttribute("user", userService.getUser(id));
 		map.addAttribute("action", "update");
 		return "user/userForm";
 	}
@@ -74,8 +72,7 @@ public class UserController {
 	 * 	size - 每页显示默认值在application.properties配置
 	 * */
 	@RequestMapping(value="/pages", method= RequestMethod.GET)
-	public String getUserPage(ModelMap map, Pageable pageable) {
-		//必须转型为Page<T>
+	public String getUserPage(ModelMap map, Pageable pageable) {		
 		Page<User> page = (Page<User>)userService.findByPage(pageable);
 		map.addAttribute("page", page);
 		System.err.println(page);		

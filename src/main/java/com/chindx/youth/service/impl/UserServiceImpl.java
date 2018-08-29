@@ -3,6 +3,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class UserServiceImpl implements UserService{
 	public List<User> findAll() {
 		return userDao.findAll();
 	}
-	//模拟数据库，存储数据
+	
 	@Override
 	public User insertByUser(User user) {
 		log.info("【新增用户】" + user.toString());
@@ -32,7 +34,11 @@ public class UserServiceImpl implements UserService{
 		log.info("【更新用户】" + user.toString());
 		return userDao.save(user);
 	}
-
+	/**
+	 * @update 08-29添加缓存配置@CacheEvict
+	 * delete后清除缓存@CacheEvict
+	 * */
+	@CacheEvict(value = "user", key = "\"user\".concat(#id)")
 	@Override
 	public User delete(Long id) {
 		User user = userDao.findById(id).get();
@@ -40,9 +46,13 @@ public class UserServiceImpl implements UserService{
 		log.info("【删除用户】" + user.toString());
 		return user;		
 	}
-
+	/**
+	 * @update 08-29添加缓存配置@Cacheable|改变方法名为getUser(之前为findById)
+	 * delete后清除缓存@CacheEvict
+	 * */
+	@Cacheable(value = "user", key = "\"user\".concat(#id)")
 	@Override
-	public User findById(Long id) {
+	public User getUser(Long id) {
 		log.info("【获取用户？ID=】" + id);
 		return userDao.findById(id).get();
 	}
