@@ -18,7 +18,7 @@ spring:
   #数据库连接池
   datasource:
     driver-class-name: com.mysql.jdbc.Driver 
-    url: jdbc:mysql://localhost:3306/youthdb?usSSL=true
+    url: jdbc:mysql://localhost:3306/youthdb?useSSL=true
     username: root
     password: 123456
 #DATA WEB 相关配置{@link SpringDataWebProperties}
@@ -39,14 +39,9 @@ spring:
     port: 6379
     #password: 123456
     timeout: 60s
-    #springboot2.0之前使用jedis
-    #jedis: 
-      #pool:
-        #max-active: 8
-        #max-idle : 8
-        #min-idle : 0
-        #max-wait : -1ms
-    #springboot2.0之后使用lettuce
+    #springboot2.0之前使用Duration
+    #springboot2.0之后使用jedis或者lettuce
+    #jedis:      
     lettuce:
       pool:
         max-active: 8 
